@@ -46,6 +46,7 @@ lerna-debug.log*
 !tsconfig.json
 !vite.config.json
 !jsconfig.json
+!vercel.json
 
 # Build artifacts
 *.tsbuildinfo
