@@ -1,6 +1,6 @@
-import { SignupForm } from "./components/SignupForm";
-import desktopBg from "figma:asset/3f5a999addc3339bb6b32251e94ca963bdaf32ed.png";
-import mobileBg from "figma:asset/a4e9b5ca9ccca6366e139c80ad4d28b190813d03.png";
+import { SignupForm } from "../components/SignupForm";
+import desktopBg from "../assets/3f5a999addc3339bb6b32251e94ca963bdaf32ed.png";
+import mobileBg from "../assets/a4e9b5ca9ccca6366e139c80ad4d28b190813d03.png";
 
 export default function App() {
   return (
