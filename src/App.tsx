@@ -5,7 +5,7 @@ export default function App() {
         {/* Title */}
         <h1 className="text-6xl md:text-8xl font-semibold tracking-tight mb-8" style={{ fontFamily: 'eloquia-text-semibold, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif' }}>
           <span className="text-[#EFEFF1]">Celeste</span>
-          <span className="bg-gradient-to-r from-[#3A7C9D] to-[#4A8CAD] bg-clip-text text-transparent">OS</span>
+          <span className="text-[#3A7C9D]">OS</span>
         </h1>
         
         {/* Subheader */}
