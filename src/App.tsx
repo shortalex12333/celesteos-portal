@@ -3,13 +3,13 @@ export default function App() {
     <div className="min-h-screen relative text-white bg-[#0A0A0A]">
       <div className="relative z-10 min-h-screen flex flex-col items-center justify-center px-4 py-16">
         {/* Title */}
-        <h1 className="text-6xl md:text-8xl font-semibold tracking-tight mb-8" style={{ fontFamily: 'eloquia-text-semibold, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif' }}>
+        <h1 className="text-6xl md:text-[88px] font-semibold mb-8" style={{ fontFamily: 'eloquia-text-semibold, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif', letterSpacing: '-0.015em', lineHeight: '1' }}>
           <span className="text-[#EFEFF1]">Celeste</span>
-          <span className="text-[#3A7C9D]">OS</span>
+          <span style={{ color: '#3A7C9D' }}>OS</span>
         </h1>
         
         {/* Subheader */}
-        <p className="text-2xl md:text-3xl text-[#EFEFF1] mb-16" style={{ fontFamily: 'eloquia-text-semibold, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif' }}>
+        <p className="text-2xl md:text-3xl text-[#DADDE0] mb-16" style={{ fontFamily: 'eloquia-text-semibold, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif' }}>
           Control over your complexity.
         </p>
         
@@ -25,14 +25,14 @@ export default function App() {
             is being validated under real operating conditions.
           </p>
           
-          <div className="text-lg md:text-xl leading-relaxed space-y-2">
+          <div className="text-lg md:text-xl leading-relaxed space-y-1.5">
             <p>• Used during live faults</p>
             <p>• Used during inspections</p>
             <p>• Used during handovers</p>
             <p>• Used when decisions cannot be reversed</p>
           </div>
           
-          <div className="text-lg md:text-xl leading-relaxed space-y-2">
+          <div className="text-lg md:text-xl leading-relaxed space-y-2 mt-6">
             <p>Celeste does not automate decisions.</p>
             <p>Celeste does not act without consent.</p>
             <p>Celeste does not hide state changes.</p>
