@@ -4,7 +4,7 @@ export default function App() {
       <div className="relative z-10 min-h-screen flex flex-col items-center justify-center px-4 py-16">
         {/* Title */}
         <h1 className="text-6xl md:text-[88px] mb-8" style={{ fontFamily: 'Eloquia Text, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif', letterSpacing: '-0.015em', lineHeight: '1' }}>
-          <span className="text-[#EFEFF1]" style={{ fontWeight: 600 }}>Celeste</span><span className="text-[#EFEFF1]" style={{ fontWeight: 500 }}>OS</span>
+          <span className="text-[#EFEFF1]" style={{ fontWeight: 600 }}>Celeste</span><span className="text-[#EFEFF1]" style={{ fontWeight: 400 }}>OS</span>
         </h1>
         
         {/* Subheader */}
