@@ -3,18 +3,17 @@ export default function App() {
     <div className="min-h-screen relative text-white bg-[#0A0A0A]">
       <div className="relative z-10 min-h-screen flex flex-col items-center justify-center px-4 py-16">
         {/* Title */}
-        <h1 className="text-6xl md:text-[88px] font-semibold mb-8" style={{ fontFamily: 'eloquia-text-semibold, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif', letterSpacing: '-0.015em', lineHeight: '1' }}>
-          <span className="text-[#EFEFF1]">Celeste</span>
-          <span className="text-[#EFEFF1]" style={{ fontFamily: 'eloquia-text-medium, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif' }}>OS</span>
+        <h1 className="text-6xl md:text-[88px] mb-8" style={{ fontFamily: 'Eloquia Text, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif', letterSpacing: '-0.015em', lineHeight: '1' }}>
+          <span className="text-[#EFEFF1]" style={{ fontWeight: 600 }}>Celeste</span><span className="text-[#EFEFF1]" style={{ fontWeight: 500 }}>OS</span>
         </h1>
         
         {/* Subheader */}
-        <p className="text-2xl md:text-3xl text-[#DADDE0] mb-16" style={{ fontFamily: 'eloquia-text-semibold, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif' }}>
+        <p className="text-2xl md:text-3xl text-[#DADDE0] mb-16" style={{ fontFamily: 'Eloquia Text, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif' }}>
           Control over your complexity.
         </p>
         
         {/* Body Content */}
-        <div className="max-w-2xl space-y-8 text-[#DADDE0]" style={{ fontFamily: 'eloquia-text-semibold, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif' }}>
+        <div className="max-w-2xl space-y-8 text-[#DADDE0]" style={{ fontFamily: 'Eloquia Text, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif' }}>
           <p className="text-lg md:text-xl leading-relaxed">
             Search-first engineering intelligence for yachts.
           </p>
