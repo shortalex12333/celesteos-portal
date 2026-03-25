@@ -1,46 +1,67 @@
+import { useState } from "react";
+import Logo from "./components/Logo";
+import PlatformStep from "./components/PlatformStep";
+import EmailStep from "./components/EmailStep";
+import CodeStep from "./components/CodeStep";
+import DownloadStep from "./components/DownloadStep";
+import type { VerifyResponse } from "./lib/api";
+
+type Step = "platform" | "email" | "code" | "download";
+
 export default function App() {
+  const [step, setStep] = useState<Step>("platform");
+  const [platform, setPlatform] = useState<"macos" | "windows">("macos");
+  const [email, setEmail] = useState("");
+  const [downloadData, setDownloadData] = useState<VerifyResponse | null>(null);
+
+  function handlePlatformSelect(p: "macos" | "windows") {
+    setPlatform(p);
+    setStep("email");
+  }
+
+  function handleCodeSent(em: string) {
+    setEmail(em);
+    setStep("code");
+  }
+
+  function handleVerified(data: VerifyResponse) {
+    setDownloadData(data);
+    setStep("download");
+  }
+
   return (
-    <div className="min-h-screen relative text-white bg-[#0A0A0A]">
-      <div className="relative z-10 min-h-screen flex flex-col items-center justify-center px-4 py-16">
-        {/* Title */}
-        <h1 className="text-6xl md:text-[88px] mb-8" style={{ fontFamily: 'Eloquia Text, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif', letterSpacing: '-0.015em', lineHeight: '1' }}>
-          <span className="text-[#EFEFF1]" style={{ fontWeight: 600 }}>Celeste</span><span className="text-[#EFEFF1]" style={{ fontWeight: 400 }}>OS</span>
-        </h1>
-        
-        {/* Subheader */}
-        <p className="text-2xl md:text-3xl text-[#DADDE0] mb-16" style={{ fontFamily: 'Eloquia Text, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif' }}>
-          Control over your complexity.
-        </p>
-        
-        {/* Body Content */}
-        <div className="max-w-2xl space-y-8 text-[#DADDE0]" style={{ fontFamily: 'Eloquia Text, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif' }}>
-          <p className="text-lg md:text-xl leading-relaxed">
-            Search-first engineering intelligence for yachts.
-          </p>
-          
-          <p className="text-lg md:text-xl leading-relaxed">
-            CelesteOS is operating in a private pilot.<br />
-            We are not onboarding new vessels while the system<br />
-            is being validated under real operating conditions.
-          </p>
-          
-          <div className="text-lg md:text-xl leading-relaxed space-y-1.5">
-            <p>• Used during live faults</p>
-            <p>• Used during inspections</p>
-            <p>• Used during handovers</p>
-            <p>• Used when decisions cannot be reversed</p>
-          </div>
-          
-          <div className="text-lg md:text-xl leading-relaxed space-y-2 mt-6">
-            <p>Celeste does not automate decisions.</p>
-            <p>Celeste does not act without consent.</p>
-            <p>Celeste does not hide state changes.</p>
-          </div>
-          
-          <p className="text-lg md:text-xl text-center pt-8">
-            Operational correspondence: contact@celeste7.ai
-          </p>
-        </div>
+    <div className="min-h-screen bg-gradient-to-br from-slate-950 to-slate-900 flex items-center justify-center p-5">
+      <div className="w-full max-w-md">
+        <Logo />
+
+        {step === "platform" && (
+          <PlatformStep onSelect={handlePlatformSelect} />
+        )}
+
+        {step === "email" && (
+          <EmailStep
+            platform={platform}
+            onCodeSent={handleCodeSent}
+            onBack={() => setStep("platform")}
+          />
+        )}
+
+        {step === "code" && (
+          <CodeStep
+            email={email}
+            onVerified={handleVerified}
+            onBack={() => setStep("email")}
+          />
+        )}
+
+        {step === "download" && downloadData && (
+          <DownloadStep
+            downloadUrl={downloadData.download_url!}
+            yachtName={downloadData.yacht_name || "Your Yacht"}
+            apiPlatform={downloadData.platform || "macos"}
+            chosenPlatform={platform}
+          />
+        )}
       </div>
     </div>
   );
