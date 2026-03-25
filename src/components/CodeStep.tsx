@@ -54,52 +54,83 @@ export default function CodeStep({ email, onVerified, onBack }: Props) {
   }
 
   return (
-    <div className="bg-slate-800/50 rounded-xl p-8 border border-slate-700/30 backdrop-blur">
-      <h2 className="text-lg text-slate-300 font-medium mb-2">
-        Check your email
-      </h2>
-      <p className="text-slate-500 text-sm mb-6">
-        Enter the 6-digit code we sent to{" "}
-        <strong className="text-slate-300">{email}</strong>
-      </p>
+    <div className="card-brand">
+      {/* Header */}
+      <div style={{ padding: "32px 32px 0", textAlign: "center" }}>
+        <h2 style={{ fontSize: "20px", fontWeight: 600, color: "var(--txt)" }}>
+          Check your email
+        </h2>
+        <p style={{ fontSize: "13px", color: "var(--txt-ghost)", marginTop: "4px" }}>
+          Enter the 6-digit code sent to{" "}
+          <span style={{ color: "var(--mark)" }}>{email}</span>
+        </p>
+      </div>
 
-      <label className="block text-sm text-slate-400 mb-1.5">
-        Verification code
-      </label>
-      <input
-        ref={inputRef}
-        type="text"
-        inputMode="numeric"
-        pattern="[0-9]*"
-        autoComplete="one-time-code"
-        maxLength={6}
-        value={code}
-        onChange={handleChange}
-        placeholder="000000"
-        disabled={loading}
-        className="w-full px-3.5 py-3 rounded-lg border border-slate-600 bg-slate-900 text-white
-                   text-center text-2xl font-semibold tracking-[0.3em]
-                   placeholder:text-slate-700 focus:border-blue-500 focus:outline-none mb-4"
-      />
-      <button
-        onClick={() => verify(code)}
-        disabled={loading || code.length !== 6}
-        className="w-full py-3 rounded-lg bg-blue-600 text-white font-semibold text-sm
-                   hover:bg-blue-500 disabled:bg-slate-700 disabled:text-slate-500 disabled:cursor-not-allowed
-                   transition-colors"
-      >
-        {loading ? "Verifying..." : "Verify"}
-      </button>
+      {/* Form */}
+      <div style={{ padding: "24px 32px 32px" }}>
+        <label className="label-brand">Verification code</label>
+        <input
+          ref={inputRef}
+          type="text"
+          inputMode="numeric"
+          pattern="[0-9]*"
+          autoComplete="one-time-code"
+          maxLength={6}
+          value={code}
+          onChange={handleChange}
+          placeholder="000000"
+          disabled={loading}
+          className="input-brand"
+          style={{
+            textAlign: "center",
+            fontSize: "20px",
+            fontWeight: 600,
+            letterSpacing: "0.25em",
+            fontFamily: "var(--font-mono)",
+            marginBottom: "16px",
+          }}
+        />
+        <button
+          onClick={() => verify(code)}
+          disabled={loading || code.length !== 6}
+          className="btn-brand"
+        >
+          {loading ? "Verifying..." : "Verify"}
+        </button>
 
-      {error && <p className="text-red-400 text-sm mt-3">{error}</p>}
+        {error && (
+          <p style={{ color: "var(--red)", fontSize: "13px", marginTop: "12px" }}>
+            {error}
+          </p>
+        )}
+      </div>
 
-      <button
-        onClick={onBack}
-        className="flex items-center gap-1 text-slate-500 text-xs mt-4 hover:text-slate-300 transition-colors"
-      >
-        <ArrowLeft className="w-3 h-3" />
-        Use a different email
-      </button>
+      {/* Back */}
+      <div style={{ padding: "0 32px 20px" }}>
+        <button
+          onClick={onBack}
+          style={{
+            display: "inline-flex",
+            alignItems: "center",
+            gap: "4px",
+            fontSize: "11px",
+            color: "var(--txt-ghost)",
+            background: "none",
+            border: "none",
+            cursor: "pointer",
+            transition: "color 80ms",
+          }}
+          onMouseEnter={(e) =>
+            (e.currentTarget.style.color = "var(--txt2)")
+          }
+          onMouseLeave={(e) =>
+            (e.currentTarget.style.color = "var(--txt-ghost)")
+          }
+        >
+          <ArrowLeft size={10} />
+          Use a different email
+        </button>
+      </div>
     </div>
   );
 }

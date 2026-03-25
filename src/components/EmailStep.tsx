@@ -42,51 +42,93 @@ export default function EmailStep({ platform, onCodeSent, onBack }: Props) {
   const platformLabel = platform === "macos" ? "macOS" : "Windows";
 
   return (
-    <div className="bg-slate-800/50 rounded-xl p-8 border border-slate-700/30 backdrop-blur">
-      <div className="flex items-center gap-2 mb-1">
-        <PlatformIcon className="w-4 h-4 text-blue-400" />
-        <span className="text-blue-400 text-xs font-medium">{platformLabel}</span>
+    <div className="card-brand">
+      {/* Header */}
+      <div style={{ padding: "32px 32px 0", textAlign: "center" }}>
+        <div
+          style={{
+            display: "inline-flex",
+            alignItems: "center",
+            gap: "6px",
+            marginBottom: "4px",
+          }}
+        >
+          <PlatformIcon size={12} style={{ color: "var(--mark)" }} />
+          <span
+            style={{
+              fontSize: "9px",
+              fontWeight: 600,
+              letterSpacing: "0.16em",
+              textTransform: "uppercase",
+              color: "var(--mark)",
+            }}
+          >
+            {platformLabel}
+          </span>
+        </div>
+        <h2 style={{ fontSize: "20px", fontWeight: 600, color: "var(--txt)" }}>
+          Download your installer
+        </h2>
+        <p
+          style={{
+            fontSize: "13px",
+            color: "var(--txt-ghost)",
+            marginTop: "4px",
+          }}
+        >
+          Enter the email associated with your yacht purchase
+        </p>
       </div>
-      <h2 className="text-lg text-slate-300 font-medium mb-2">
-        Download your installer
-      </h2>
-      <p className="text-slate-500 text-sm mb-6">
-        Enter the email address associated with your yacht purchase.
-      </p>
 
-      <form onSubmit={handleSubmit}>
-        <label className="block text-sm text-slate-400 mb-1.5">
-          Email address
-        </label>
+      {/* Form */}
+      <form onSubmit={handleSubmit} style={{ padding: "24px 32px 32px" }}>
+        <label className="label-brand">Email address</label>
         <input
           type="email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           placeholder="buyer@example.com"
           autoComplete="email"
-          className="w-full px-3.5 py-3 rounded-lg border border-slate-600 bg-slate-900 text-white
-                     placeholder:text-slate-600 focus:border-blue-500 focus:outline-none text-base mb-4"
+          className="input-brand"
+          style={{ marginBottom: "16px" }}
         />
-        <button
-          type="submit"
-          disabled={loading}
-          className="w-full py-3 rounded-lg bg-blue-600 text-white font-semibold text-sm
-                     hover:bg-blue-500 disabled:bg-slate-700 disabled:text-slate-500 disabled:cursor-not-allowed
-                     transition-colors"
-        >
+        <button type="submit" disabled={loading} className="btn-brand">
           {loading ? "Sending..." : "Send verification code"}
         </button>
+
+        {error && (
+          <p style={{ color: "var(--red)", fontSize: "13px", marginTop: "12px" }}>
+            {error}
+          </p>
+        )}
       </form>
 
-      {error && <p className="text-red-400 text-sm mt-3">{error}</p>}
-
-      <button
-        onClick={onBack}
-        className="flex items-center gap-1 text-slate-500 text-xs mt-4 hover:text-slate-300 transition-colors"
-      >
-        <ArrowLeft className="w-3 h-3" />
-        Change platform
-      </button>
+      {/* Back */}
+      <div style={{ padding: "0 32px 20px" }}>
+        <button
+          onClick={onBack}
+          style={{
+            display: "inline-flex",
+            alignItems: "center",
+            gap: "4px",
+            fontSize: "11px",
+            color: "var(--txt-ghost)",
+            background: "none",
+            border: "none",
+            cursor: "pointer",
+            transition: "color 80ms",
+          }}
+          onMouseEnter={(e) =>
+            (e.currentTarget.style.color = "var(--txt2)")
+          }
+          onMouseLeave={(e) =>
+            (e.currentTarget.style.color = "var(--txt-ghost)")
+          }
+        >
+          <ArrowLeft size={10} />
+          Change platform
+        </button>
+      </div>
     </div>
   );
 }

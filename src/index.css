@@ -2,8 +2,164 @@
 @tailwind components;
 @tailwind utilities;
 
+/* ═══════════════════════════════════════════════════════════════
+   CelesteOS Design Tokens — Dark Mode
+   Source of truth: prototype-tokens.css
+   ═══════════════════════════════════════════════════════════════ */
+
+:root {
+  /* Surfaces (warm blacks, never pure #000) */
+  --surface-base: #0c0b0a;
+  --surface: #181614;
+  --surface-el: #1e1b18;
+  --surface-hover: #242424;
+
+  /* Borders (asymmetric — simulates overhead light) */
+  --border-sub: rgba(255,255,255,0.07);
+  --border-top: rgba(255,255,255,0.11);
+  --border-side: rgba(255,255,255,0.06);
+  --border-bottom: rgba(255,255,255,0.03);
+  --border-faint: rgba(255,255,255,0.04);
+  --border-chrome: rgba(255,255,255,0.08);
+
+  /* Shadows */
+  --shadow-card: 0 20px 80px rgba(0,0,0,0.60),
+                 0 4px 20px rgba(0,0,0,0.40),
+                 inset 0 1px 0 rgba(255,255,255,0.05);
+  --shadow-drop: 0 8px 24px rgba(0,0,0,0.50);
+
+  /* Glass */
+  --glass-bg: rgba(16,14,12,0.65);
+
+  /* Text hierarchy */
+  --txt: rgba(255,255,255,0.92);
+  --txt2: rgba(255,255,255,0.55);
+  --txt3: rgba(255,255,255,0.70);
+  --txt-ghost: rgba(255,255,255,0.40);
+
+  /* Brand teal */
+  --mark: #5AABCC;
+  --teal: #3A7C9D;
+  --teal-bg: rgba(58,124,157,0.12);
+  --mark-hover: rgba(58,124,157,0.22);
+
+  /* Signal colours */
+  --red: #C0503A;
+  --red-bg: rgba(192,80,58,0.10);
+  --red-border: rgba(192,80,58,0.22);
+  --green: #4A9468;
+  --green-bg: rgba(76,175,129,0.10);
+  --green-border: rgba(76,175,129,0.22);
+  --amber: #C4893B;
+  --amber-bg: rgba(196,137,59,0.10);
+  --amber-border: rgba(196,137,59,0.22);
+  --blue: #5B8DEF;
+
+  /* Typography */
+  --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+  --font-mono: 'SF Mono', 'Fira Code', ui-monospace, monospace;
+}
+
+/* ─── Base ─── */
+
 body {
   margin: 0;
+  font-family: var(--font-sans);
+  background: var(--surface-base);
+  color: var(--txt);
+  font-size: 13px;
+  line-height: 1.5;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+/* ─── Brand card (asymmetric borders like auth.html) ─── */
+
+.card-brand {
+  background: var(--surface);
+  border-top: 1px solid var(--border-top);
+  border-right: 1px solid var(--border-sub);
+  border-bottom: 1px solid var(--border-faint);
+  border-left: 1px solid var(--border-sub);
+  border-radius: 8px;
+  box-shadow: var(--shadow-card);
+  overflow: hidden;
+}
+
+/* ─── Brand input (matches auth.html .field-input) ─── */
+
+.input-brand {
+  width: 100%;
+  height: 44px;
+  padding: 0 14px;
+  background: var(--surface-base);
+  border: 1px solid var(--border-sub);
+  border-radius: 6px;
+  font-family: var(--font-sans);
+  font-size: 13px;
+  color: var(--txt);
+  outline: none;
+  transition: border-color 120ms;
+}
+.input-brand::placeholder {
+  color: var(--txt-ghost);
+}
+.input-brand:focus {
+  border-color: var(--teal);
+}
+
+/* ─── Brand button (matches auth.html .auth-btn) ─── */
+
+.btn-brand {
+  width: 100%;
+  height: 44px;
+  border: none;
+  border-radius: 6px;
+  background: var(--mark);
+  color: #fff;
+  font-family: var(--font-sans);
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: opacity 120ms;
+}
+.btn-brand:hover {
+  opacity: 0.88;
+}
+.btn-brand:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+.btn-download {
+  width: 100%;
+  height: 44px;
+  border: none;
+  border-radius: 6px;
+  background: var(--green);
+  color: #fff;
+  font-family: var(--font-sans);
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: opacity 120ms;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+.btn-download:hover {
+  opacity: 0.88;
+}
+
+/* ─── Field label (matches auth.html .field-label) ─── */
+
+.label-brand {
+  display: block;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  color: var(--txt3);
+  margin-bottom: 6px;
 }

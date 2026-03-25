@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Apple, Monitor } from "lucide-react";
 
 interface Props {
@@ -5,35 +6,67 @@ interface Props {
 }
 
 export default function PlatformStep({ onSelect }: Props) {
+  const [hovered, setHovered] = useState<string | null>(null);
+
   return (
-    <div className="bg-slate-800/50 rounded-xl p-8 border border-slate-700/30 backdrop-blur">
-      <h2 className="text-lg text-slate-300 font-medium mb-2">
-        Choose your platform
-      </h2>
-      <p className="text-slate-500 text-sm mb-6">
-        Select the operating system on your yacht's computer.
-      </p>
-
-      <div className="grid grid-cols-2 gap-4">
-        <button
-          onClick={() => onSelect("macos")}
-          className="flex flex-col items-center gap-3 p-6 rounded-lg border border-slate-600/40 bg-slate-700/30
-                     hover:border-blue-500/60 hover:bg-slate-700/60 transition-all cursor-pointer group"
+    <div className="card-brand" style={{ padding: "32px 32px 32px" }}>
+      <div style={{ textAlign: "center", marginBottom: "24px" }}>
+        <h2 style={{ fontSize: "16px", fontWeight: 600, color: "var(--txt)" }}>
+          Choose your platform
+        </h2>
+        <p
+          style={{
+            fontSize: "13px",
+            color: "var(--txt-ghost)",
+            marginTop: "4px",
+          }}
         >
-          <Apple className="w-10 h-10 text-slate-400 group-hover:text-white transition-colors" />
-          <span className="text-white font-semibold text-base">macOS</span>
-          <span className="text-slate-500 text-xs">.dmg installer</span>
-        </button>
+          Select the operating system on your yacht's computer
+        </p>
+      </div>
 
-        <button
-          onClick={() => onSelect("windows")}
-          className="flex flex-col items-center gap-3 p-6 rounded-lg border border-slate-600/40 bg-slate-700/30
-                     hover:border-blue-500/60 hover:bg-slate-700/60 transition-all cursor-pointer group"
-        >
-          <Monitor className="w-10 h-10 text-slate-400 group-hover:text-white transition-colors" />
-          <span className="text-white font-semibold text-base">Windows</span>
-          <span className="text-xs text-slate-500">.exe installer</span>
-        </button>
+      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "12px" }}>
+        {(["macos", "windows"] as const).map((p) => {
+          const Icon = p === "macos" ? Apple : Monitor;
+          const label = p === "macos" ? "macOS" : "Windows";
+          const ext = p === "macos" ? ".dmg installer" : ".exe installer";
+          const isHovered = hovered === p;
+
+          return (
+            <button
+              key={p}
+              onClick={() => onSelect(p)}
+              onMouseEnter={() => setHovered(p)}
+              onMouseLeave={() => setHovered(null)}
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+                gap: "10px",
+                padding: "24px 16px",
+                borderRadius: "6px",
+                border: `1px solid ${isHovered ? "var(--mark)" : "var(--border-sub)"}`,
+                background: isHovered ? "var(--surface-hover)" : "var(--surface-el)",
+                cursor: "pointer",
+                transition: "all 120ms",
+              }}
+            >
+              <Icon
+                size={28}
+                style={{
+                  color: isHovered ? "var(--txt)" : "var(--txt2)",
+                  transition: "color 120ms",
+                }}
+              />
+              <span style={{ fontSize: "14px", fontWeight: 600, color: "var(--txt)" }}>
+                {label}
+              </span>
+              <span style={{ fontSize: "11px", color: "var(--txt-ghost)" }}>
+                {ext}
+              </span>
+            </button>
+          );
+        })}
       </div>
     </div>
   );
