@@ -8,7 +8,7 @@ export default defineConfig({
   workers: 1,
   reporter: [["list"], ["html", { open: "never" }]],
   use: {
-    baseURL: "http://localhost:3000",
+    baseURL: "http://localhost:3001",
     trace: "on-first-retry",
     screenshot: "only-on-failure",
   },
@@ -18,8 +18,12 @@ export default defineConfig({
       use: { ...devices["Desktop Chrome"] },
     },
   ],
-  // Start servers manually before running tests:
-  // 1. cd Cloud_PMS/apps/api && MOCK_PORT=8002 python3 tests/mock_import_server.py
-  // 2. cd celesteos-portal && VITE_IMPORT_API_URL=http://localhost:8002 npm run dev
-  // Then: npx playwright test
+  // Mock tests:
+  //   cd Cloud_PMS/apps/api && MOCK_PORT=8002 python3 tests/mock_import_server.py
+  //   cd celesteos-portal && VITE_IMPORT_API_URL=http://localhost:8002 npm run dev -- --port 3001
+  //   npx playwright test e2e/import-flow.spec.ts
+  //
+  // Production smoke test (hits real pipeline-core.int.celeste7.ai):
+  //   cd celesteos-portal && VITE_IMPORT_API_URL=https://pipeline-core.int.celeste7.ai npm run dev -- --port 3001
+  //   npx playwright test e2e/production-smoke.spec.ts
 });
