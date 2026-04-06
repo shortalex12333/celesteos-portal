@@ -4,7 +4,9 @@ export interface VerifyResponse {
   success: boolean;
   download_url?: string;
   yacht_name?: string;
+  yacht_id?: string;
   platform?: string;
+  import_token?: string;
   error?: string;
   attempts_remaining?: number;
 }

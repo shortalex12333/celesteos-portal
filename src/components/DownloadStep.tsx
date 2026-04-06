@@ -1,4 +1,5 @@
-import { Apple, Monitor, Download } from "lucide-react";
+import { Apple, Monitor, Download, ArrowRight } from "lucide-react";
+import { Link } from "react-router-dom";
 
 interface Props {
   downloadUrl: string;
@@ -94,6 +95,51 @@ export default function DownloadStep({
             {isWindows ? "macOS" : "Windows"} installer.
           </div>
         )}
+
+        {/* Import CTA */}
+        <div
+          style={{
+            marginTop: "24px",
+            paddingTop: "24px",
+            borderTop: "1px solid var(--border-sub)",
+          }}
+        >
+          <p
+            style={{
+              fontSize: "13px",
+              fontWeight: 500,
+              color: "var(--txt2)",
+              marginBottom: "6px",
+            }}
+          >
+            Have existing maintenance data?
+          </p>
+          <p
+            style={{
+              fontSize: "12px",
+              color: "var(--txt-ghost)",
+              marginBottom: "12px",
+              lineHeight: 1.5,
+            }}
+          >
+            Import equipment, work orders, and faults from your current system.
+          </p>
+          <Link
+            to="/import"
+            style={{
+              display: "inline-flex",
+              alignItems: "center",
+              gap: "6px",
+              fontSize: "13px",
+              fontWeight: 500,
+              color: "var(--mark)",
+              textDecoration: "none",
+              transition: "opacity 120ms",
+            }}
+          >
+            Import data <ArrowRight size={14} />
+          </Link>
+        </div>
       </div>
     </div>
   );

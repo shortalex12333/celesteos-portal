@@ -163,3 +163,375 @@ body {
   color: var(--txt3);
   margin-bottom: 6px;
 }
+
+/* ═══════════════════════════════════════════════════════════════
+   Premium Import Flow — Prototype-Grade Effects
+   Matches: lens-work-order-v6.html visual DNA
+   ═══════════════════════════════════════════════════════════════ */
+
+/* ─── Panel (prototype shadow: ring + bloom) ─── */
+
+.panel-premium {
+  background: var(--surface);
+  border-top: 1px solid rgba(255,255,255,0.11);
+  border-right: 1px solid rgba(255,255,255,0.06);
+  border-bottom: 1px solid rgba(255,255,255,0.03);
+  border-left: 1px solid rgba(255,255,255,0.06);
+  border-radius: 8px;
+  box-shadow: 0 0 0 1px rgba(0,0,0,0.60), 0 28px 80px rgba(0,0,0,0.80);
+  overflow: hidden;
+}
+
+/* ─── Glass Header (lens-hdr pattern) ─── */
+
+.glass-hdr {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 0 20px;
+  height: 52px;
+  border-bottom: 1px solid var(--border-sub);
+  background: rgba(16,14,12,0.65);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+.glass-hdr-title {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--mark);
+}
+
+.glass-hdr-meta {
+  font-size: 11px;
+  color: var(--txt-ghost);
+  font-family: var(--font-mono);
+  margin-left: auto;
+}
+
+/* ─── Drop Zone (magnetic snap + glow) ─── */
+
+.drop-zone {
+  position: relative;
+  padding: 40px 20px;
+  border: 1.5px dashed var(--border-sub);
+  border-radius: 8px;
+  text-align: center;
+  cursor: pointer;
+  transition: border-color 120ms, background 120ms, box-shadow 200ms;
+}
+
+.drop-zone:hover {
+  border-color: rgba(90,171,204,0.4);
+  background: rgba(58,124,157,0.05);
+}
+
+.drop-zone.active {
+  border-color: var(--mark);
+  border-style: solid;
+  background: var(--teal-bg);
+  box-shadow: 0 0 0 4px rgba(58,124,157,0.12), 0 0 30px rgba(58,124,157,0.15);
+}
+
+.drop-zone .drop-icon {
+  display: block;
+  margin: 0 auto 12px;
+  color: var(--txt-ghost);
+  transition: transform 200ms ease, color 200ms;
+}
+
+.drop-zone.active .drop-icon {
+  transform: scale(1.12);
+  color: var(--mark);
+}
+
+/* ─── File Card (snapped file after drop) ─── */
+
+.file-card {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 14px;
+  border-radius: 6px;
+  background: var(--surface-base);
+  border: 1px solid var(--border-faint);
+  animation: file-snap 200ms ease-out;
+}
+
+@keyframes file-snap {
+  0% { opacity: 0; transform: translateY(-6px) scale(0.97); }
+  60% { transform: translateY(1px) scale(1.01); }
+  100% { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+/* ─── Shimmer Skeleton (detection loading) ─── */
+
+.shimmer-row {
+  height: 40px;
+  border-radius: 4px;
+  background: linear-gradient(
+    90deg,
+    rgba(255,255,255,0.03) 0%,
+    rgba(255,255,255,0.07) 50%,
+    rgba(255,255,255,0.03) 100%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.5s ease-in-out infinite;
+}
+
+@keyframes shimmer {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+/* ─── Live Counter (ticking field count) ─── */
+
+.counter-tick {
+  display: inline-block;
+  animation: counter-pop 150ms ease-out;
+}
+
+@keyframes counter-pop {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.15); }
+  100% { transform: scale(1); }
+}
+
+/* ─── Progress Pipeline ─── */
+
+.pipeline {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  padding: 0 4px;
+  margin-bottom: 20px;
+}
+
+.pipeline-stage {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex: 1;
+}
+
+.pipeline-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  transition: background 300ms, box-shadow 300ms;
+}
+
+.pipeline-dot.done {
+  background: var(--green);
+  box-shadow: 0 0 6px rgba(74,148,104,0.4);
+}
+
+.pipeline-dot.active {
+  background: var(--mark);
+  box-shadow: 0 0 8px rgba(90,171,204,0.5);
+  animation: pulse-dot 2s ease-in-out infinite;
+}
+
+.pipeline-dot.pending {
+  background: rgba(255,255,255,0.12);
+}
+
+@keyframes pulse-dot {
+  0%, 100% { box-shadow: 0 0 8px rgba(90,171,204,0.5); }
+  50% { box-shadow: 0 0 14px rgba(90,171,204,0.7); }
+}
+
+.pipeline-label {
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+  transition: color 300ms;
+}
+
+.pipeline-label.done { color: var(--txt3); }
+.pipeline-label.active { color: var(--txt); }
+.pipeline-label.pending { color: var(--txt-ghost); }
+
+.pipeline-line {
+  flex: 1;
+  height: 1px;
+  margin: 0 6px;
+  transition: background 300ms;
+}
+
+.pipeline-line.done { background: var(--green); }
+.pipeline-line.pending { background: rgba(255,255,255,0.06); }
+
+/* ─── Confidence Glow Rows ─── */
+
+.map-row-green {
+  background: rgba(74,148,104,0.06);
+  border-left: 3px solid var(--green);
+}
+
+.map-row-amber {
+  background: rgba(196,137,59,0.06);
+  border-left: 3px solid var(--amber);
+}
+
+.map-row-red {
+  background: rgba(192,80,58,0.06);
+  border-left: 3px solid var(--red);
+}
+
+.map-row-green td:first-child,
+.map-row-amber td:first-child,
+.map-row-red td:first-child {
+  padding-left: 14px;
+}
+
+/* ─── Section Divider (prototype pattern) ─── */
+
+.section-rule {
+  border-top: 1px solid var(--border-sub);
+  padding-top: 20px;
+  margin-top: 24px;
+}
+
+.section-title {
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--txt3);
+}
+
+/* ─── Animated Checkmark (completion) ─── */
+
+.check-circle {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: var(--green);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 16px;
+  animation: check-appear 500ms ease-out;
+}
+
+@keyframes check-appear {
+  0% { opacity: 0; transform: scale(0.5); }
+  60% { transform: scale(1.08); }
+  100% { opacity: 1; transform: scale(1); }
+}
+
+.check-circle svg {
+  color: #fff;
+  animation: check-draw 400ms ease-out 200ms both;
+}
+
+@keyframes check-draw {
+  0% { opacity: 0; transform: scale(0.6); }
+  100% { opacity: 1; transform: scale(1); }
+}
+
+/* ─── Summary Row (post-commit domain counts) ─── */
+
+.summary-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--border-faint);
+}
+
+.summary-row:last-child {
+  border-bottom: none;
+}
+
+.summary-domain {
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  color: var(--txt3);
+}
+
+.summary-count {
+  font-size: 14px;
+  font-family: var(--font-mono);
+  font-weight: 500;
+  color: var(--txt);
+}
+
+/* ─── Matched Fields Badge ─── */
+
+.match-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px;
+  border-radius: 4px;
+  font-size: 12px;
+  font-family: var(--font-mono);
+  font-weight: 500;
+}
+
+.match-badge.green {
+  background: var(--green-bg);
+  color: var(--green);
+  border: 1px solid var(--green-border);
+}
+
+.match-badge.amber {
+  background: var(--amber-bg);
+  color: var(--amber);
+  border: 1px solid var(--amber-border);
+}
+
+/* ─── Select (premium dropdown) ─── */
+
+.select-premium {
+  width: 100%;
+  height: 44px;
+  padding: 0 14px;
+  background: var(--surface-base);
+  border: 1px solid var(--border-sub);
+  border-radius: 6px;
+  font-family: var(--font-sans);
+  font-size: 13px;
+  color: var(--txt);
+  cursor: pointer;
+  outline: none;
+  transition: border-color 120ms, box-shadow 120ms;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='rgba(255,255,255,0.4)' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 14px center;
+}
+
+.select-premium:focus {
+  border-color: var(--teal);
+  box-shadow: 0 0 0 3px rgba(58,124,157,0.15);
+}
+
+/* ─── Utility: Mono ─── */
+
+.mono { font-family: var(--font-mono); }
+
+/* ─── Mobile notice ─── */
+
+@media (max-width: 768px) {
+  .mobile-notice { display: flex !important; }
+}
+
+/* ─── Utility: Fade In ─── */
+
+.fade-in {
+  animation: fade-in 300ms ease;
+}
+
+@keyframes fade-in {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
