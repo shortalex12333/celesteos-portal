@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { ChevronDown, ChevronRight, AlertTriangle, ArrowLeft } from "lucide-react";
+import { ChevronDown, ChevronRight, AlertTriangle, ArrowLeft, Paperclip } from "lucide-react";
 import type { ImportSession, DomainSummary } from "../../types/import";
 import type { ImportApi } from "../../lib/importApi";
 
@@ -207,6 +207,48 @@ export default function PreviewScreen({ session, api, onUpdate }: Props) {
           );
         })}
       </div>
+
+      {/* File reference summary */}
+      {preview.file_ref_summary && preview.file_ref_summary.total > 0 && (
+        <div
+          style={{
+            margin: "0 28px 16px",
+            padding: "10px 12px",
+            borderRadius: "6px",
+            background: "rgba(74,148,140,0.06)",
+            border: "1px solid rgba(74,148,140,0.2)",
+            display: "flex",
+            alignItems: "center",
+            gap: "8px",
+          }}
+        >
+          <Paperclip size={13} style={{ color: "var(--teal)", flexShrink: 0 }} />
+          <span style={{ fontSize: "12px", color: "var(--txt2)" }}>
+            <span style={{ fontFamily: "var(--font-mono)", fontWeight: 500, color: "var(--teal)" }}>
+              {preview.file_ref_summary.total}
+            </span>
+            {" "}file reference{preview.file_ref_summary.total !== 1 ? "s" : ""} found
+            {preview.file_ref_summary.matched > 0 && (
+              <span>
+                {" · "}
+                <span style={{ fontFamily: "var(--font-mono)", color: "var(--green)" }}>
+                  {preview.file_ref_summary.matched}
+                </span>
+                {" "}matched to uploaded files
+              </span>
+            )}
+            {preview.file_ref_summary.placeholders > 0 && (
+              <span>
+                {" · "}
+                <span style={{ fontFamily: "var(--font-mono)", color: "var(--txt3)" }}>
+                  {preview.file_ref_summary.placeholders}
+                </span>
+                {" "}as placeholders
+              </span>
+            )}
+          </span>
+        </div>
+      )}
 
       {/* Warnings */}
       {preview.warnings.length > 0 && (

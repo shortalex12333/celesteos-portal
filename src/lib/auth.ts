@@ -24,6 +24,13 @@ export function storeAuth(token: string, yachtName: string, email: string) {
 }
 
 export function getAuth(): AuthState | null {
+  // Dev mode bypass: if VITE_IMPORT_DEV_YACHT_ID is set, fake auth state
+  // so we can reach /import without going through registration/2FA
+  const devYachtId = import.meta.env.VITE_IMPORT_DEV_YACHT_ID;
+  if (import.meta.env.DEV && devYachtId) {
+    return { token: "dev-bypass", yachtName: "Test Vessel", email: "dev@celeste7.ai" };
+  }
+
   const token = sessionStorage.getItem(TOKEN_KEY);
   const yachtName = sessionStorage.getItem(YACHT_KEY);
   const email = sessionStorage.getItem(EMAIL_KEY);

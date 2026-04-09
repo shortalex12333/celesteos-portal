@@ -17,7 +17,7 @@ export type ConfidenceLevel = 'green' | 'amber' | 'red';
 
 export type WarningSeverity = 'info' | 'amber' | 'red';
 
-export type MappingAction = 'map' | 'skip';
+export type MappingAction = 'map' | 'skip' | 'link_as_document';
 
 // --- Detection result (from parse & detect) ---
 
@@ -122,12 +122,19 @@ export interface ImportWarning {
   severity: WarningSeverity;
 }
 
+export interface FileRefSummary {
+  total: number;
+  matched: number;
+  placeholders: number;
+}
+
 export interface PreviewSummary {
   domains: Record<string, DomainSummary>;
   total_records: number;
   can_commit: boolean;
   warnings: ImportWarning[];
   first_10: Record<string, Record<string, unknown>[]>;
+  file_ref_summary?: FileRefSummary;
 }
 
 // --- API responses ---

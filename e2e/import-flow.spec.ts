@@ -287,15 +287,16 @@ test.describe("Edge Cases", () => {
   test("import page accessible via direct URL with auth", async ({ page }) => {
     await seedAuth(page);
     await page.goto("/import");
-    // VERIFY: does not redirect away, import UI renders
-    await expect(page.getByText(/import/i).first()).toBeVisible();
+    // VERIFY: does not redirect away, import UI renders (glass header title)
+    await expect(page.locator(".glass-hdr-title")).toBeVisible({ timeout: 10_000 });
+    expect(page.url()).toContain("/import");
   });
 
-  test("import page redirects without auth", async ({ page }) => {
-    // No seedAuth — should redirect to /
+  test("import page shows mobile notice on small viewport", async ({ page }) => {
+    // Mobile viewport — import shows notice instead of full UI
+    await page.setViewportSize({ width: 375, height: 812 });
+    await seedAuth(page);
     await page.goto("/import");
-    // VERIFY: redirected to root (download flow)
-    await page.waitForURL("/", { timeout: 5_000 });
-    expect(page.url()).not.toContain("/import");
+    await expect(page.getByText(/best viewed on desktop/i)).toBeVisible({ timeout: 5_000 });
   });
 });

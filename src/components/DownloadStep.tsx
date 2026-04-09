@@ -1,4 +1,4 @@
-import { Apple, Monitor, Download, ArrowRight } from "lucide-react";
+import { Apple, Monitor, Download, ArrowRight, UserPlus } from "lucide-react";
 import { Link } from "react-router-dom";
 
 interface Props {
@@ -6,6 +6,7 @@ interface Props {
   yachtName: string;
   apiPlatform: string;
   chosenPlatform: "macos" | "windows";
+  onInviteTeam: () => void;
 }
 
 export default function DownloadStep({
@@ -13,6 +14,7 @@ export default function DownloadStep({
   yachtName,
   apiPlatform,
   chosenPlatform,
+  onInviteTeam,
 }: Props) {
   const isWindows = apiPlatform === "windows";
   const PlatformIcon = isWindows ? Monitor : Apple;
@@ -96,7 +98,7 @@ export default function DownloadStep({
           </div>
         )}
 
-        {/* Import CTA */}
+        {/* Invite team CTA */}
         <div
           style={{
             marginTop: "24px",
@@ -112,7 +114,7 @@ export default function DownloadStep({
               marginBottom: "6px",
             }}
           >
-            Have existing maintenance data?
+            Crew or officers to add?
           </p>
           <p
             style={{
@@ -122,8 +124,38 @@ export default function DownloadStep({
               lineHeight: 1.5,
             }}
           >
-            Import equipment, work orders, and faults from your current system.
+            Invite your team so they can access CelesteOS on this vessel.
           </p>
+          <button
+            onClick={onInviteTeam}
+            style={{
+              display: "inline-flex",
+              alignItems: "center",
+              gap: "6px",
+              fontSize: "13px",
+              fontWeight: 500,
+              color: "var(--mark)",
+              background: "none",
+              border: "none",
+              padding: 0,
+              cursor: "pointer",
+              fontFamily: "var(--font-sans)",
+              transition: "opacity 120ms",
+            }}
+          >
+            <UserPlus size={14} />
+            Invite team <ArrowRight size={14} />
+          </button>
+        </div>
+
+        {/* Import CTA */}
+        <div
+          style={{
+            marginTop: "16px",
+            paddingTop: "16px",
+            borderTop: "1px solid var(--border-faint)",
+          }}
+        >
           <Link
             to="/import"
             style={{
@@ -132,12 +164,12 @@ export default function DownloadStep({
               gap: "6px",
               fontSize: "13px",
               fontWeight: 500,
-              color: "var(--mark)",
+              color: "var(--txt-ghost)",
               textDecoration: "none",
               transition: "opacity 120ms",
             }}
           >
-            Import data <ArrowRight size={14} />
+            Import existing data <ArrowRight size={14} />
           </Link>
         </div>
       </div>

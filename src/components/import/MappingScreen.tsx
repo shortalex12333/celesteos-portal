@@ -28,11 +28,21 @@ function buildInitialMappings(session: ImportSession): FileMapping[] {
   return session.detection_result.data_files.map((file) => ({
     file: file.filename,
     domain: file.domain,
-    columns: file.columns.map((col) => ({
-      source: col.source_name,
-      target: col.suggested_target ?? null,
-      action: col.action ?? (col.suggested_target ? "map" as const : "skip" as const),
-    })),
+    columns: file.columns.map((col) => {
+      // File reference columns default to link_as_document
+      if (col.inferred_type === "file_ref") {
+        return {
+          source: col.source_name,
+          target: "file_ref",
+          action: "link_as_document" as const,
+        };
+      }
+      return {
+        source: col.source_name,
+        target: col.suggested_target ?? null,
+        action: col.action ?? (col.suggested_target ? "map" as const : "skip" as const),
+      };
+    }),
   }));
 }
 
@@ -59,7 +69,7 @@ export default function MappingScreen({ session, api, onUpdate }: Props) {
     fileIndex: number,
     colIndex: number,
     target: string | null,
-    action: "map" | "skip"
+    action: "map" | "skip" | "link_as_document"
   ) {
     setMappings((prev) => {
       const next = [...prev];
@@ -78,23 +88,32 @@ export default function MappingScreen({ session, api, onUpdate }: Props) {
     fileMap.columns.every((col, ci) => {
       const detected = files[fi]?.columns[ci];
       if (!detected) return true;
+      // File ref columns with link_as_document are resolved
+      if (col.action === "link_as_document") return true;
       if ((detected.confidence ?? 0) >= 0.6 && col.target) return true;
       // Red columns must be explicitly mapped or skipped
       return col.action === "skip" || (col.action === "map" && col.target);
     })
   );
 
-  // Count columns needing review
+  // Count columns needing review (exclude file_ref — they're auto-detected)
   const reviewCount = mappings.reduce((count, fileMap, fi) => {
     return (
       count +
       fileMap.columns.filter((col, ci) => {
         const detected = files[fi]?.columns[ci];
         if (!detected) return false;
+        if (detected.inferred_type === "file_ref") return false;
         return (detected.confidence ?? 0) < 0.6 && col.action !== "skip" && !col.target;
       }).length
     );
   }, 0);
+
+  // Count file reference columns
+  const fileRefCount = files.reduce(
+    (count, file) => count + file.columns.filter((c) => c.inferred_type === "file_ref").length,
+    0
+  );
 
   // Check required mappings — at least one source column must target each required field
   const missingRequired: { domain: string; field: string }[] = [];
@@ -161,7 +180,9 @@ export default function MappingScreen({ session, api, onUpdate }: Props) {
   // Count matched vs total for badge
   const totalCols = files.reduce((s, f) => s + f.columns.length, 0);
   const matchedCols = mappings.reduce(
-    (s, fm) => s + fm.columns.filter((c) => c.action === "map" && c.target).length,
+    (s, fm) => s + fm.columns.filter((c) =>
+      (c.action === "map" && c.target) || c.action === "link_as_document"
+    ).length,
     0
   );
 
@@ -320,6 +341,7 @@ export default function MappingScreen({ session, api, onUpdate }: Props) {
                         action={
                           mappings[fi]?.columns[ci]?.action ?? "skip"
                         }
+                        inferredType={col.inferred_type}
                         onTargetChange={(target, action) =>
                           updateColumn(fi, ci, target, action)
                         }
@@ -404,6 +426,17 @@ export default function MappingScreen({ session, api, onUpdate }: Props) {
       {/* Footer */}
       {!confirming && (
         <div style={{ padding: "0 24px 24px" }}>
+          {fileRefCount > 0 && (
+            <p
+              style={{
+                fontSize: "12px",
+                color: "var(--teal)",
+                marginBottom: reviewCount > 0 ? "4px" : "12px",
+              }}
+            >
+              {fileRefCount} document reference column{fileRefCount !== 1 ? "s" : ""} detected.
+            </p>
+          )}
           {reviewCount > 0 && (
             <p
               style={{

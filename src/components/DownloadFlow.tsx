@@ -4,10 +4,11 @@ import PlatformStep from "./PlatformStep";
 import EmailStep from "./EmailStep";
 import CodeStep from "./CodeStep";
 import DownloadStep from "./DownloadStep";
+import InviteStep from "./InviteStep";
 import type { VerifyResponse } from "../lib/api";
 import { storeAuth } from "../lib/auth";
 
-type Step = "platform" | "email" | "code" | "download";
+type Step = "platform" | "email" | "code" | "download" | "invite";
 
 export default function DownloadFlow() {
   const [step, setStep] = useState<Step>("platform");
@@ -66,6 +67,14 @@ export default function DownloadFlow() {
           yachtName={downloadData.yacht_name || "Your Yacht"}
           apiPlatform={downloadData.platform || "macos"}
           chosenPlatform={platform}
+          onInviteTeam={() => setStep("invite")}
+        />
+      )}
+
+      {step === "invite" && downloadData && (
+        <InviteStep
+          yachtName={downloadData.yacht_name || "Your Yacht"}
+          token={downloadData.import_token || ""}
         />
       )}
     </div>
