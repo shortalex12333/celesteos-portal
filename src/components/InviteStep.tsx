@@ -152,6 +152,17 @@ export default function InviteStep({ yachtName, yachtId, token, fleetVessels }: 
           >
             Import data <ArrowRight size={14} />
           </Link>
+
+          <p
+            style={{
+              fontSize: "11px",
+              color: "var(--txt-ghost)",
+              margin: "20px 0 0",
+              lineHeight: 1.5,
+            }}
+          >
+            Re-sending an invite only issues a new login link — it does not update name or rank. To change a crew member&apos;s role, use role management in the app.
+          </p>
         </div>
       </div>
     );
