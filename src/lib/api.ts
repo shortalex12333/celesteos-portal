@@ -33,3 +33,24 @@ export async function verifyDownloadCode(
   });
   return resp.json();
 }
+
+export interface InviteRequest {
+  email: string;
+  name: string;
+  rank: string;
+}
+
+export async function sendInvites(
+  token: string,
+  invitees: InviteRequest[]
+): Promise<{ success: boolean; error?: string }> {
+  const resp = await fetch(`${API_BASE_URL}/api/invite-users`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify({ invitees }),
+  });
+  return resp.json();
+}
