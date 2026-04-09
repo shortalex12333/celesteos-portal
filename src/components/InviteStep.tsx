@@ -7,11 +7,19 @@ interface Invitee {
   email: string;
   name: string;
   rank: string;
+  vessel_ids: string[];
+}
+
+interface FleetVessel {
+  yacht_id: string;
+  yacht_name: string;
 }
 
 interface Props {
   yachtName: string;
+  yachtId: string;
   token: string;
+  fleetVessels: FleetVessel[];
 }
 
 const RANKS = [
@@ -26,7 +34,12 @@ const RANKS = [
   { value: "admin", label: "Admin" },
 ];
 
-export default function InviteStep({ yachtName, token }: Props) {
+export default function InviteStep({ yachtName, yachtId, token, fleetVessels }: Props) {
+  const isFleet = fleetVessels.length > 1;
+  const [selectedVesselIds, setSelectedVesselIds] = useState<string[]>(
+    fleetVessels.length > 0 ? fleetVessels.map((v) => v.yacht_id) : [yachtId]
+  );
+
   const [email, setEmail] = useState("");
   const [name, setName] = useState("");
   const [rank, setRank] = useState("crew");
@@ -49,7 +62,7 @@ export default function InviteStep({ yachtName, token }: Props) {
       setError("Already added");
       return;
     }
-    setInvitees([...invitees, { email: trimmed, name: name.trim(), rank }]);
+    setInvitees([...invitees, { email: trimmed, name: name.trim(), rank, vessel_ids: selectedVesselIds }]);
     setEmail("");
     setName("");
     setRank("crew");
@@ -171,6 +184,69 @@ export default function InviteStep({ yachtName, token }: Props) {
           </span>
           . They'll receive an email to set up their account.
         </p>
+
+        {/* Fleet vessel selector — only shown for fleet accounts */}
+        {isFleet && (
+          <div style={{ marginBottom: "16px" }}>
+            <p
+              style={{
+                fontSize: "12px",
+                fontWeight: 500,
+                color: "var(--txt-ghost)",
+                textTransform: "uppercase",
+                letterSpacing: "0.04em",
+                margin: "0 0 8px",
+              }}
+            >
+              Assign to vessels
+            </p>
+            <div
+              style={{
+                borderRadius: "6px",
+                border: "1px solid var(--border-faint)",
+                overflow: "hidden",
+              }}
+            >
+              {fleetVessels.map((vessel, i) => {
+                const checked = selectedVesselIds.includes(vessel.yacht_id);
+                return (
+                  <label
+                    key={vessel.yacht_id}
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      gap: "10px",
+                      padding: "9px 14px",
+                      borderBottom:
+                        i < fleetVessels.length - 1
+                          ? "1px solid var(--border-faint)"
+                          : "none",
+                      cursor: "pointer",
+                      background: checked ? "var(--surface-raised)" : "transparent",
+                      transition: "background 100ms",
+                    }}
+                  >
+                    <input
+                      type="checkbox"
+                      checked={checked}
+                      onChange={(e) => {
+                        setSelectedVesselIds(
+                          e.target.checked
+                            ? [...selectedVesselIds, vessel.yacht_id]
+                            : selectedVesselIds.filter((id) => id !== vessel.yacht_id)
+                        );
+                      }}
+                      style={{ accentColor: "var(--mark)", width: "14px", height: "14px" }}
+                    />
+                    <span style={{ fontSize: "13px", color: "var(--txt)" }}>
+                      {vessel.yacht_name}
+                    </span>
+                  </label>
+                );
+              })}
+            </div>
+          </div>
+        )}
 
         {/* Name + Rank input row */}
         <div style={{ display: "flex", gap: "8px", marginBottom: "8px" }}>

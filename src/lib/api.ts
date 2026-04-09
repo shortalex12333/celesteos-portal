@@ -1,10 +1,18 @@
 import { API_BASE_URL } from "./config";
 
+export interface FleetVessel {
+  yacht_id: string;
+  yacht_name: string;
+}
+
 export interface VerifyResponse {
   success: boolean;
   download_url?: string;
   yacht_name?: string;
   yacht_id?: string;
+  fleet_id?: string;
+  fleet_vessels?: FleetVessel[];
+  join_pin?: string;
   platform?: string;
   import_token?: string;
   error?: string;
@@ -38,6 +46,7 @@ export interface InviteRequest {
   email: string;
   name: string;
   rank: string;
+  vessel_ids?: string[];
 }
 
 export async function sendInvites(

@@ -74,7 +74,9 @@ export default function DownloadFlow() {
       {step === "invite" && downloadData && (
         <InviteStep
           yachtName={downloadData.yacht_name || "Your Yacht"}
+          yachtId={downloadData.yacht_id || ""}
           token={downloadData.import_token || ""}
+          fleetVessels={downloadData.fleet_vessels || []}
         />
       )}
     </div>
