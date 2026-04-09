@@ -22,16 +22,17 @@ interface Props {
   fleetVessels: FleetVessel[];
 }
 
+// Values must match the CHECK constraint on tenant auth_users_roles.role:
+// chief_engineer | eto | captain | manager | vendor | crew | deck | interior
 const RANKS = [
   { value: "captain", label: "Captain" },
-  { value: "first_officer", label: "First Officer" },
+  { value: "deck", label: "Deck Officer" },
   { value: "chief_engineer", label: "Chief Engineer" },
-  { value: "second_engineer", label: "Second Engineer" },
-  { value: "bosun", label: "Bosun" },
-  { value: "deck_officer", label: "Deck Officer" },
-  { value: "steward", label: "Steward/ess" },
+  { value: "eto", label: "ETO / 2nd Engineer" },
+  { value: "interior", label: "Interior / Steward" },
   { value: "crew", label: "Crew" },
-  { value: "admin", label: "Admin" },
+  { value: "manager", label: "Manager / Admin" },
+  { value: "vendor", label: "Vendor" },
 ];
 
 export default function InviteStep({ yachtName, yachtId, token, fleetVessels }: Props) {
